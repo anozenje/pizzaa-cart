@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Pizza</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+
+<body>
+    <div class="pizzaz" x-data="{ small: 0, medium: 0, large: 0, paid: '', checkout: false, get total() { return (this.small * 78.99 + this.medium * 89.99 + this.large * 129.99).toFixed(2); } }">
+        <div class="perfect_pizza">
+            <h1>Perfect Pizza</h1>
+            <h2>Pizza orders</h2>
+        </div>
+
+        <div class="Shopping_cart">
+            <div class="Shopping_cart">
+                <h1>Shopping cart</h1>
+
+                <div class="pizzaz">
+                    <div class="Shopping_cart" x-show="small != 0 || medium != 0 || large != 0">
+                        <template x-if="small > 0">
+                            <div class="small-cart">
+                                Small:
+                                <template x-if="!checkout">
+                                    <button class="Shopping_cart" @click="small++">+</button>
+                                </template>
+                                <span x-text="small"></span>
+                                <template x-if="!checkout">
+                                    <button class="Shopping_cart" @click="small--">-</button>
+                                </template>
+                                <span>Price: R<span x-text="(small * 78.99).toFixed(2)"></span></span>
+                            </div>
+                        </template>
+
+                        <template x-if="medium > 0">
+                            <div class="medium-cart">
+                                Medium:
+                                <template x-if="!checkout">
+                                    <button class="Shopping_cart" @click="medium++">+</button>
+                                </template>
+                                <span x-text="medium"></span>
+                                <template x-if="!checkout">
+                                    <button class="Shopping_cart" @click="medium--">-</button>
+                                </template>
+                                <span>Price: R<span x-text="(medium * 89.99).toFixed(2)"></span></span>
+                            </div>
+                        </template>
+
+                        <template x-if="large > 0">
+                            <div class="large-cart">
+                                Large:
+                                <template x-if="!checkout">
+                                    <button class="Shopping_cart" @click="large++">+</button>
+                                </template>
+                                <span x-text="large"></span>
+                                <template x-if="!checkout">
+                                    <button class="Shopping_cart" @click="large--">-</button>
+                                </template>
+                                <span>Price: R<span x-text="(large * 129.99).toFixed(2)"></span></span>
+                            </div>
+                        </template>
+
+                        <span><b>Grand total: R</b><span class="Shopping_cart" x-text="total"></span></span>
+
+                        <template x-if="!checkout">
+                            <button class="Shopping_cart" @click="checkout=!checkout">Checkout</button>
+                        </template>
+
+                        <template x-if="checkout">
+                            <label>Amount received from customer: R<input type="number" min="0" step="0.01" x-model="paid" /></label>
+                        </template>
+
+                        <template x-if="paid == total && checkout">
+                            <span>
+                                <div style="color: rgb(15, 15, 15)">Enjoy your pizzas!</div>
+                                <button class="Mdesign AW Bdesign" @click="small=0; medium=0; large=0; checkout=false;">
+                                    Complete Order
+                                </button>
+                            </span>
+                        </template>
+
+                        <template x-if="parseInt(paid) < total && paid != total && checkout">
+                            <span>
+                                <div style="border: 1px solid rgb(204, 3, 3); color: #e70909;">
+                                    <h2><b>This is not enough money</b></h2>
+                                </div>
+                                <button class="Shopping_cart" @click="small=0; medium=0; large=0; checkout=false;">
+                                    Exit-Cart
+                                </button>
+                            </span>
+                        </template>
+
+                        <template x-if="parseInt(paid) > total && checkout">
+                            <span>
+                                <div style="color: rgb(15, 15, 15)">
+                                    <br>
+                                    <b>Enjoy your pizza, Here's your change: R</b><span x-text="(parseInt(paid) - total).toFixed(2)"></span>
+                                </div>
+                                <button class="Shopping_cart" @click="small=0; medium=0; large=0; checkout=false; paid=''">
+                                    Complete the Order
+                                </button>
+                            </span>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pizzas">
+            <div class="large_pizza">
+                <h2>Large Pizza</h2>
+                <img src="https://cdn1.vectorstock.com/i/1000x1000/56/45/italian-pizza-icon-cartoon-style-vector-21885645.jpg" width="150">
+                <h3>R129.99</h3>
+                <button class="Mdesign W Bdesin" @click="large++">ORDER</button>
+                <div>
+                    Large margeritha pizza with 3 toppings max. 3 meat toppings max. 3 or less other toppings.
+                </div>
+            </div>
+
+            <div class="medium_pizza">
+                <h2>Medium Pizza</h2>
+                <img src="https://cdn1.vectorstock.com/i/1000x1000/56/45/italian-pizza-icon-cartoon-style-vector-21885645.jpg" width="125">
+                <h3>R89.99</h3>
+                <button class="Mdesign W Bdesign" @click="medium++">ORDER</button>
+                <div>
+                    medium margeritha pizza with 3 toppings max. 2 or less meat toppings. 3 or less other toppings.
+                </div>
+            </div>
+
+            <div class="small_pizza">
+                <h2>Small Pizza</h2>
+                <img src="https://cdn1.vectorstock.com/i/1000x1000/56/45/italian-pizza-icon-cartoon-style-vector-21885645.jpg" width="100">
+                <h3>R78.99</h3>
+                <button class="Mdesign W Bdesign" @click="small++">ORDER</button>
+                <div>
+                    small pizza with 3 toppings. 1 meat topping. 3 or less other toppings
+                </div>
+            </div>
+        </div>
+
+        <div class="contact_us">
+            <div class="contact">
+                <h2>Contact details</h2>
+                Contact us at: (011)-668-5000
+                <div>Twitter: @for.her_perfectpizza</div>
+                <div>Instagram: @for.her_perfectpizza</div>
+            </div>
+
+            <div class="address">
+                <h2>Location</h2>
+                <div>Campus Square</div>
+                <div>Mimosa Avenue</div>
+                <div>Leondale</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
